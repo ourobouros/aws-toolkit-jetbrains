@@ -9,7 +9,6 @@ import com.intellij.execution.process.ProcessHandler
 import com.intellij.execution.process.ProcessHandlerFactory
 import com.intellij.execution.runners.ExecutionEnvironment
 import com.intellij.openapi.util.io.FileUtil
-import software.aws.toolkits.jetbrains.services.lambda.execution.sam.SamInvokeRunner.SamRunner
 import software.aws.toolkits.jetbrains.settings.SamSettings
 
 class SamRunningState(
@@ -30,8 +29,9 @@ class SamRunningState(
             .withParameters("--event")
             .withParameters(createEventFile())
             .withEnvironment(settings.environmentVariables)
+            .withEnvironment("PYTHONUNBUFFERED", "1") // Force SAM to not buffer stdout/stderr so it gets shown in IDE
 
-        runner.patchSamCommand(this, commandLine)
+        runner.patchCommandLine(this, commandLine)
 
         return ProcessHandlerFactory.getInstance().createColoredProcessHandler(commandLine)
     }

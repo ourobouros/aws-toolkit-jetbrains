@@ -57,6 +57,7 @@ import software.aws.toolkits.core.utils.createTemporaryZipFile
 import software.aws.toolkits.core.utils.putNextEntry
 import software.aws.toolkits.jetbrains.services.lambda.execution.local.LambdaLocalRunProvider
 import software.aws.toolkits.jetbrains.services.lambda.execution.local.LambdaLocalRunSettings
+import software.aws.toolkits.jetbrains.services.lambda.execution.sam.SamDebugSupport
 import software.aws.toolkits.jetbrains.services.lambda.execution.sam.SamRunningState
 import software.aws.toolkits.resources.message
 import java.io.InputStream
@@ -322,7 +323,7 @@ object InvokerJar {
     }
 }
 
-class JavaLambdaDebugger : LambdaDebugger {
+class JavaSamDebugSupport : SamDebugSupport {
     override fun createDebugProcess(
         environment: ExecutionEnvironment,
         state: SamRunningState,
